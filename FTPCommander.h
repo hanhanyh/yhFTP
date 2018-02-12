@@ -61,6 +61,7 @@ public slots:
      void Nlst();//显示列表
      void getPwd();//显示工作目录
      void setCWD(QString path);//改变当前工作目录
+     void setStor(QString path);//上传文件
 };
 
 #endif // FTPCOMMANDER_H

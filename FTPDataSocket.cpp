@@ -28,6 +28,19 @@ FTPDataSocket::FTPDataSocket(QString ip,int port,workmode mode,QString  args):QT
 void  FTPDataSocket::conned()
 {
     qDebug()<<"数据连接连接服务器成功";
+
+    if(*mmode==DATASTOR)
+    {
+        char data[1];
+        int readamount=0;
+        QFile f("D://"+*mArgs);
+        f.open(QIODevice::ReadOnly);
+        while((readamount=f.read(data,1))>0)
+        {
+            this->write(data,1);
+        }
+        this->close();//写完就立即关闭套接字
+    }
 }
 void FTPDataSocket::recv()
 {

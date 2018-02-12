@@ -117,6 +117,10 @@ void FTPCommander:: recvComm()
                    this->write(sendbuff,1024);
                    this->flush();
                    startDataThread("127.0.0.1",a5*256+a6,DATANLST);//获取列表模式
+               }else if(*willDataStatus==STOR)//执行文件上传
+               {
+                  // *willDataStatus=STOR;
+                   //*willDataArgs=path;
                }
             ///test
 
@@ -288,4 +292,11 @@ int  FTPCommander::readLine()
         }
     }
     return -1;//没有读取到回车换行
+}
+void FTPCommander::setStor(QString path)//上传文件
+{
+
+    *willDataStatus=STOR;
+    *willDataArgs=path;
+    setPASV();//设置被动模式
 }

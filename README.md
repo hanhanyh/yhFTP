@@ -4,3 +4,4 @@
 1. USER PASS 用户登录
 2. PASV 被动模式
 3. RETR 文件下载
+4. NLST获取文件列表
