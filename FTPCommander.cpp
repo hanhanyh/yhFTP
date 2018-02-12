@@ -42,7 +42,7 @@ void FTPCommander:: recvComm()
 
         case WELCOME://连接服务器成果后显示欢迎信息
              {
-                    this->read(recvbuff,1024);//欢迎信息有很多行
+                    this->read(recvbuff,1024);//欢迎信息有很多行所以不用readLine
                     qDebug()<<recvbuff;
                     //显示欢迎过后设置用户名和密码
                     qDebug()<<"状态码："<<getServerStatus();//220欢迎
@@ -82,13 +82,15 @@ void FTPCommander:: recvComm()
                       emit LoginFailure();//登录失败
 
                   }
-                  getPwd();
+                   getPwd();
+                 // setPASV();
             }
 
         break;
         case PASV://先设置PASV状态 再进行相关操作比如列表  下载等等（这里是PASV ACK）
             {
-                this->read(recvbuff,1024);
+             //this->read(recvbuff,1024);
+            this->readLine();
            // qDebug()<<"状态码："<<getServerStatus();//227 被动模式PASV
               qDebug()<<recvbuff;
               int a1,a2,a3,a4,a5,a6;
@@ -129,7 +131,7 @@ void FTPCommander:: recvComm()
     case PWDD://PWD获取服务器当前工作目录
           {
                 memset(recvbuff,'\0',1024);
-               this->read(recvbuff,1023);
+                this->readLine();
                 QString reBuff(recvbuff);
                 QString sstatus=reBuff.mid(0,3);
                 if(sstatus.toInt()==257)
