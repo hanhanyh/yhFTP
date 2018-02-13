@@ -82,8 +82,9 @@ void FTPCommander:: recvComm()
                       emit LoginFailure();//登录失败
 
                   }
-                   getPwd();
+                  // getPwd();
                  // setPASV();
+                 setStor("x.txt");
             }
 
         break;
@@ -121,6 +122,13 @@ void FTPCommander:: recvComm()
                {
                   // *willDataStatus=STOR;
                    //*willDataArgs=path;
+                   *ftpstatus=STOR;
+                   memset(sendbuff,'\0',1024);
+                   QString senddata=QString("STOR ")+*(this->willDataArgs)+"\r\n";
+                //   sprintf(sendbuff,"STOR %s \r\n",this->willDataArgs->toStdString());//命令 空格 回车换行
+                   this->write(QByteArray::fromStdString(senddata.toStdString()));
+                   this->flush();
+                   startDataThread("127.0.0.1",a5*256+a6,DATASTOR);//获取列表模式
                }
             ///test
 
