@@ -2,6 +2,7 @@
 #include<QDebug>
 #include<QFile>
 #include<QHostAddress>
+#include"globalvar.h"
 FTPDataSocket::FTPDataSocket(QString ip,int port,workmode mode,QString  args):QTcpSocket(nullptr),
     mmode(new workmode),
     mArgs(new QString),
@@ -15,7 +16,7 @@ FTPDataSocket::FTPDataSocket(QString ip,int port,workmode mode,QString  args):QT
      *iseek=0;
     if(mode==DATARETR)
     {
-        QFile f("D://"+args);
+        QFile f(*LocalPWD+args);
         if(f.exists()==true)f.remove();
     }
     QObject::connect(this,SIGNAL(connected()),this,SLOT(conned()));
@@ -33,7 +34,7 @@ void  FTPDataSocket::conned()
     {
         char data[1];
         int readamount=0;
-        QFile f("D://"+*mArgs);
+        QFile f(*LocalPWD+*mArgs);
         f.open(QIODevice::ReadOnly);
         while((readamount=f.read(data,1))>0)
         {
@@ -50,7 +51,7 @@ void FTPDataSocket::recv()
     ///
     if(*(this->mmode)==DATARETR)//接收文件
     {
-        QString file= QString("D://")+QString(*mArgs);
+        QString file= QString(*LocalPWD)+QString(*mArgs);
         QFile f(file);
        f.open(QIODevice::Append);
         while((amount=this->read(x,1024))!=0)

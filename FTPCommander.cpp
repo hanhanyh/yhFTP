@@ -84,7 +84,7 @@ void FTPCommander:: recvComm()
                   }
                   // getPwd();
                  // setPASV();
-                 setStor("x.txt");
+                  setStor("xxx.txt");
             }
 
         break;
@@ -105,7 +105,7 @@ void FTPCommander:: recvComm()
                    *ftpstatus=RETR;
                    memset(sendbuff,'\0',1024);
                    QString willdata;
-                   willdata=QString("RETR ")+willDataArgs+"\r\n";
+                   willdata=QString("RETR ") + *willDataArgs+"\r\n";
                  //  sprintf(sendbuff,"%s %s\r\n","RETR",willDataArgs);
                    this->write(QByteArray::fromStdString(willdata.toStdString()));
                    this->flush();
