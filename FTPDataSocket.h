@@ -19,6 +19,8 @@ private:
      qint64 * iseek;//接收数据偏移
 signals:
     void dirList(QStringList list);//获取到了目录
+    void DownloadStarting(QString file);//开始下载
+    void DownloadSuccess(QString file);//下载成功
 public:
     FTPDataSocket(QString ip,int port,workmode mode,QString args);
 private slots:

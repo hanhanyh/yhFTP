@@ -84,7 +84,8 @@ void FTPCommander:: recvComm()
                   }
                   // getPwd();
                  // setPASV();
-                  setStor("xxx.txt");
+                 // setStor("xxx.txt");
+                 Retr("xxx.txt");
             }
 
         break;

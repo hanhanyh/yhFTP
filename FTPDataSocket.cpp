@@ -18,7 +18,10 @@ FTPDataSocket::FTPDataSocket(QString ip,int port,workmode mode,QString  args):QT
     {
         QFile f(*LocalPWD+args);
         if(f.exists()==true)f.remove();
+        //发送开始下载信号
+        emit DownloadStarting(args);
     }
+
     QObject::connect(this,SIGNAL(connected()),this,SLOT(conned()));
     QObject::connect(this,SIGNAL(readyRead()),this,SLOT(recv()));
     QObject::connect(this,SIGNAL(disconnected()),this,SLOT(setdisconned()));
@@ -90,6 +93,11 @@ void FTPDataSocket::setdisconned()
         }
         //这里还有一个小bug 最后一个 split出来的字符串为空
         emit  dirList(dirlist);//此类的信号  发给 FTPCommander接收 ，再传给UI
+    }
+    if(*(this->mmode)==DATARETR)
+    {
+        //下载成功
+         emit DownloadSuccess(*mArgs);
     }
 
 }
