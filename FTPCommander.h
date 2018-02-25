@@ -33,6 +33,9 @@ signals:
     void PWD(QString pwd);//当前工作目录
     void sCWD();//改变工作目录信号（成功）
     void DownLoadSuccess();//下载成功
+    void DownLoadSuccess(QString file);//下载成功
+    void DownloadStarting(QString file);//开始下载
+    void  dirList(QStringList list);//目录获取成功信号
 private:
   //  char * username;//用户名和密码
 //    char * userpwd;

@@ -85,7 +85,8 @@ void FTPCommander:: recvComm()
                   // getPwd();
                  // setPASV();
                  // setStor("xxx.txt");
-                 Retr("xxx.txt");
+                // Retr("xxx.txt");
+                 this->Nlst();
             }
 
         break;
@@ -264,6 +265,11 @@ void FTPCommander::getPwd()//显示工作目录
      QThread *thread=new QThread();
      FTPDataSocket* socket=new FTPDataSocket(ip,port,mode,*willDataArgs);//这里的参数一般是 文件名 用来保存
      socket->moveToThread(thread);
+     //连接下载信号 (信号连接信号 是用来给UI 传递信号)
+     connect(socket,SIGNAL(DownloadStarting(QString)),this,SIGNAL(DownloadStarting(QString)));
+     connect(socket,SIGNAL(DownloadSuccess(QString)),this,SIGNAL(DownLoadSuccess(QString)));
+     //连接目录获取成功信号
+     connect(socket,SIGNAL(dirList(QStringList)),this,SIGNAL(dirList(QStringList)));
      //connect(socket,SIGNAL(disconnected()),thread,SLOT(quit()));
      //connect(socket,SIGNAL(disconnected()),socket,SLOT(deleteLater()));
      //connect(socket,SIGNAL(disconnected()),thread,SLOT(deleteLater()));

@@ -3,6 +3,7 @@
 #include<QFile>
 #include<QHostAddress>
 #include"globalvar.h"
+#include<QThread>
 FTPDataSocket::FTPDataSocket(QString ip,int port,workmode mode,QString  args):QTcpSocket(nullptr),
     mmode(new workmode),
     mArgs(new QString),
@@ -99,5 +100,7 @@ void FTPDataSocket::setdisconned()
         //下载成功
          emit DownloadSuccess(*mArgs);
     }
+    this->deleteLater();
+    this->thread()->quit();
 
 }
